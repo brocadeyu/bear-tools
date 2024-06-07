@@ -2,7 +2,7 @@
   <div class="home-container">
     <!-- <div class="logo-content">
       <appLogo></appLogo>
-    </div> -->
+    </div> -->{{ batteryNum }}
     <div class="list-content">
       <appList></appList>
     </div>
@@ -12,6 +12,13 @@
 <script setup>
 import appLogo from './components/app-logo.vue'
 import appList from './components/app-list.vue'
+import { ref } from 'vue'
+console.log('')
+const batteryNum = ref('')
+navigator.getBattery().then((data) => {
+  console.log('data', data)
+  batteryNum.value = `${data.level * 100}%`
+})
 </script>
 <style scoped>
 .home-container {

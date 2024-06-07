@@ -1,7 +1,7 @@
 <template>
   <div class="logo-container">
-    <van-image width="10%" height="80%" :src="Bear" />
-    <div class="logo-text">熊の工具箱</div>
+    <van-image width="10%" height="100%" :src="Bear" />
+    <!-- <div class="logo-text">熊の工具箱</div> -->
   </div>
 </template>
 <script setup>

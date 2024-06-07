@@ -15,19 +15,19 @@ import appList from './components/app-list.vue'
 </script>
 <style scoped>
 .home-container {
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: 100vh;
   display: flex;
   flex-direction: column;
   padding: 1rem;
   box-sizing: border-box;
 }
 .logo-content {
-  height: 20%;
+  height: 20vh;
   /* background-color: green; */
 }
 .list-content {
-  height: 80%;
+  height: 80vh;
   background-image: url('../../assets/iphone.png');
   background-size: cover; /* 确保背景图片覆盖整个 div */
   background-position: center; /* 将背景图片置于 div 的中心 */

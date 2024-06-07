@@ -23,11 +23,11 @@ import appList from './components/app-list.vue'
   box-sizing: border-box;
 }
 .logo-content {
-  height: 25vh;
+  height: 25%;
   /* background-color: green; */
 }
 .list-content {
-  height: 75vh;
+  height: 75%;
   /* background-color: red; */
 }
 </style>

@@ -16,7 +16,7 @@ import appList from './components/app-list.vue'
 <style scoped>
 .home-container {
   height: 100vh;
-  width: 100vh;
+  width: 100vw;
   display: flex;
   flex-direction: column;
   padding: 1rem;

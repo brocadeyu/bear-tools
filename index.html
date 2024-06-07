@@ -22,4 +22,14 @@
       background-color: lightblue;
     }
   </style>
+  <script>
+    function setVh() {
+      let vh = window.innerHeight * 0.01
+      document.documentElement.style.setProperty('--vh', `${vh}px`)
+    }
+
+    window.addEventListener('resize', setVh)
+    window.addEventListener('orientationchange', setVh)
+    setVh() // 初始调用，设置变量值
+  </script>
 </html>

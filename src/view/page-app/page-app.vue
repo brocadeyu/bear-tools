@@ -2,7 +2,13 @@
   <div class="home-container">
     <div class="logo-content">
       <!-- <appLogo></appLogo> -->
-      <van-button type="success" @click="selectImage">选取图片</van-button>
+      <!-- <van-button type="success" @click="selectImage">选取图片</van-button> -->
+      <input
+        type="file"
+        id="imageInput"
+        accept="image/*"
+        @change="handleInput"
+      />
       <van-button type="success" style="margin-left: 10px" @click="handleGen"
         >开始合成</van-button
       >
@@ -23,6 +29,23 @@ import eye1 from '../../assets/appLogo/eye1.png'
 import appLogo from '../page-home/components/app-logo.vue'
 import * as htmlToImage from 'html-to-image'
 import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image'
+const handleInput = (e) => {
+  const file = event.target.files[0]
+  if (file) {
+    const img = new Image()
+    img.src = URL.createObjectURL(file)
+    img.onload = function () {
+      // 绘制图片到画布或者其他操作
+      console.log('Image loaded.')
+      const canvas = document.getElementById('canvasId')
+      const ctx = canvas.getContext('2d')
+      // 清空画布
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      // 绘制图片到画布上
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+    }
+  }
+}
 const selectImage = async () => {
   const opt = {
     types: [

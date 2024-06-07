@@ -4,8 +4,8 @@
       <van-swipe-item
         ><div class="swipe-item">
           <appItem
-            style="margin-top: 1.2rem"
-            v-for="(item, index) in list.slice(0, 20)"
+            :style="{ marginTop: `${3 * computedVh}px` }"
+            v-for="(item, index) in list.slice(0, 15)"
           /></div
       ></van-swipe-item>
       <van-swipe-item><div class="swipe-item">空</div></van-swipe-item>
@@ -18,6 +18,10 @@
 <script setup>
 import appItem from '../../../components/app-item.vue'
 import EyeLogo from '../../../assets/appLogo/eye.png'
+import { computed } from 'vue'
+const computedVh = computed(() => {
+  return window._vh
+})
 const list = [
   {
     logo: EyeLogo,
@@ -108,21 +112,6 @@ const list = [
     name: '',
   },
 
-  {
-    logo: '',
-    text: '',
-    name: '',
-  },
-  {
-    logo: '',
-    text: '',
-    name: '',
-  },
-  {
-    logo: '',
-    text: '',
-    name: '',
-  },
   {
     logo: '',
     text: '',

@@ -1,9 +1,12 @@
 <template>
-  <div class="item-container">
+  <div
+    class="item-container"
+    :style="{ height: `${12 * computedVh}px`, width: `${12 * computedVh}px` }"
+  >
     <div class="img">
       <van-image
-        width="4rem"
-        height="4rem"
+        :width="`10${computedVh}px`"
+        :height="`10${computedVh}px`"
         :src="BearPng"
         fit="cover"
         position="center"
@@ -14,6 +17,10 @@
 </template>
 <script setup>
 import BearPng from '../assets/appLogo/eye.png'
+import { computed } from 'vue'
+const computedVh = computed(() => {
+  return window._vh
+})
 </script>
 <style scoped>
 .item-container {

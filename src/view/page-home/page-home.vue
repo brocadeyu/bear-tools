@@ -1,8 +1,8 @@
 <template>
   <div class="home-container">
-    <div class="logo-content">
+    <!-- <div class="logo-content">
       <appLogo></appLogo>
-    </div>
+    </div> -->
     <div class="list-content">
       <appList></appList>
     </div>
@@ -28,7 +28,7 @@ import appList from './components/app-list.vue'
   /* background-color: green; */
 }
 .list-content {
-  height: 95%;
+  height: 100%;
   background-image: url('../../assets/iphone.png');
   background-size: 100% 100%; /* 确保背景图片覆盖整个 div */
   background-position: 0 0; /* 将背景图片置于 div 的中心 */

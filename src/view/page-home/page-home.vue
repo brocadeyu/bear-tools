@@ -25,7 +25,7 @@ import appList from './components/app-list.vue'
 }
 .logo-content {
   height: 20vh;
-  /* background-color: green; */
+  background-color: green;
 }
 .list-content {
   height: 80vh;

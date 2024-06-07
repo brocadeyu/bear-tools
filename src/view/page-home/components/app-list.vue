@@ -5,7 +5,7 @@
         ><div class="swipe-item">
           <appItem
             :style="{ marginTop: `${3 * computedVh}px` }"
-            v-for="(item, index) in list.slice(0, 15)"
+            v-for="(item, index) in list.slice(0, 12)"
           /></div
       ></van-swipe-item>
       <van-swipe-item><div class="swipe-item">空</div></van-swipe-item>
@@ -211,7 +211,7 @@ const list = [
   /* border: 1px solid red; */
   box-sizing: border-box;
   border-radius: 0.5rem;
-  padding: 3.5rem 3rem 2.5rem 3rem;
+  padding: 4.5rem 3rem 3rem 3rem;
 }
 .my-swipe {
   width: 100%;

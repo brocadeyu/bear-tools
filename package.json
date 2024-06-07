@@ -11,6 +11,7 @@
   "dependencies": {
     "normalize.css": "^8.0.1",
     "vant": "^4.9.1",
+    "vh-check": "^2.0.5",
     "vue": "^3.4.21",
     "vue-router": "4"
   },

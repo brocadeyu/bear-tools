@@ -14,6 +14,9 @@ importers:
       vant:
         specifier: ^4.9.1
         version: 4.9.1(vue@3.4.27)
+      vh-check:
+        specifier: ^2.0.5
+        version: 2.0.5
       vue:
         specifier: ^3.4.21
         version: 3.4.27
@@ -606,6 +609,9 @@ packages:
     peerDependencies:
       vue: ^3.0.0
 
+  vh-check@2.0.5:
+    resolution: {integrity: sha512-vHtIYWt9uLl2P2tLlatVpMwv9+ezuJCtMNjUVIpzd5Pa/dJXN8AtqkKmVRcNSlmXyCjkCkbMQX/Vs9axmdlfgg==}
+
   vite@5.2.12:
     resolution: {integrity: sha512-/gC8GxzxMK5ntBwb48pR32GGhENnjtY30G4A0jemunsBkiEZFw60s8InGpN8gkhHEkjnRK1aSAxeQgwvFhUHAA==}
     engines: {node: ^18.0.0 || >=20.0.0}
@@ -1179,6 +1185,8 @@ snapshots:
       '@vant/use': 1.6.0(vue@3.4.27)
       '@vue/shared': 3.4.27
       vue: 3.4.27
+
+  vh-check@2.0.5: {}
 
   vite@5.2.12:
     dependencies:

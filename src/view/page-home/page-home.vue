@@ -24,14 +24,14 @@ import appList from './components/app-list.vue'
   background-color: gray;
 }
 .logo-content {
-  height: 20%;
-  background-color: green;
+  height: 5%;
+  /* background-color: green; */
 }
 .list-content {
-  height: 80%;
+  height: 95%;
   background-image: url('../../assets/iphone.png');
-  background-size: cover; /* 确保背景图片覆盖整个 div */
-  background-position: center; /* 将背景图片置于 div 的中心 */
+  background-size: 100% 100%; /* 确保背景图片覆盖整个 div */
+  background-position: 0 0; /* 将背景图片置于 div 的中心 */
   background-repeat: no-repeat; /* 防止背景图片重复 */
 }
 </style>

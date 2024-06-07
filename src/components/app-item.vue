@@ -1,6 +1,7 @@
 <template>
   <div
     class="item-container"
+    @click="handleClick"
     :style="{ height: `${12 * computedVh}px`, width: `${12 * computedVh}px` }"
   >
     <div class="img">
@@ -18,9 +19,17 @@
 <script setup>
 import BearPng from '../assets/appLogo/eye.png'
 import { computed } from 'vue'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 const computedVh = computed(() => {
   return window._vh
 })
+const handleClick = () => {
+  console.log('clcik')
+  router.push({
+    path: '/app',
+  })
+}
 </script>
 <style scoped>
 .item-container {

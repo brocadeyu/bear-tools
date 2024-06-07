@@ -1,24 +1,5 @@
 <template>
   <div class="list-container">
-    <!-- <div class="warpper"> -->
-
-    <!-- <appItem v-for="(item, index) in list"></appItem> -->
-    <!-- <van-grid
-        :gutter="10"
-        style="overflow: scroll"
-        :icon-size="'100px'"
-        :column-num="3"
-      >
-        <van-grid-item
-          to="/app"
-          v-for="(item, index) in list"
-          :key="index"
-          :icon="item.logo"
-          :text="item.text || '文字'"
-        >
-        </van-grid-item>
-      </van-grid> -->
-    <!-- </div> -->
     <van-swipe class="my-swipe" :loop="false" indicator-color="white">
       <van-swipe-item
         ><div class="swipe-item">
@@ -27,9 +8,9 @@
             v-for="(item, index) in list.slice(0, 20)"
           /></div
       ></van-swipe-item>
-      <van-swipe-item><div class="swipe-item">222222</div></van-swipe-item>
-      <van-swipe-item><div class="swipe-item">333333</div></van-swipe-item>
-      <van-swipe-item><div class="swipe-item">444444</div></van-swipe-item>
+      <van-swipe-item><div class="swipe-item">空</div></van-swipe-item>
+      <van-swipe-item><div class="swipe-item">空</div></van-swipe-item>
+      <van-swipe-item><div class="swipe-item">空</div></van-swipe-item>
     </van-swipe>
   </div>
 </template>
@@ -235,38 +216,13 @@ const list = [
 ]
 </script>
 <style scoped>
-/* .warpper {
-  height: 100%;
-  width: 100%;
-  overflow-y: scroll;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex-wrap: wrap;
-}
-.warpper::-webkit-scrollbar {
-  -webkit-appearance: none;
-}
-.warpper::-webkit-scrollbar:vertical {
-  width: 0.3rem;
-}
-.warpper::-webkit-scrollbar-thumb {
-  border-radius: 8px;
-  border: 2px solid rgba(255, 255, 255, 0.4);
-  background-color: rgba(0, 0, 0, 0.5);
-} */
 .list-container {
   height: 100%;
   width: 100%;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   box-sizing: border-box;
   border-radius: 0.5rem;
-  padding: 1rem;
-  /* display: flex; */
-  /* flex-wrap: wrap; */
-  /* justify-content: center; */
-  /* align-items: flex-start; */
-  /* overflow: hidden; */
+  padding: 3.5rem 3rem 2.5rem 3rem;
 }
 .my-swipe {
   width: 100%;
@@ -277,7 +233,6 @@ const list = [
   font-size: 20px;
   line-height: 150px;
   text-align: center;
-  background-color: #39a9ed;
 }
 .swipe-item {
   height: 100%;

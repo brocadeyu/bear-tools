@@ -52,7 +52,7 @@ import BearPng from '../assets/appLogo/eye.png'
   bottom: 0;
   /* background-color: rgb(0, 255, 98); */
   z-index: 10;
-  color: rgb(217, 216, 216);
+  color: black;
   display: flex;
   justify-content: center;
   align-items: center;

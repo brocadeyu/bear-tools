@@ -1,6 +1,6 @@
 <template>
   <div class="logo-container">
-    <van-image width="40%" height="80%" :src="Bear" />
+    <van-image width="30%" height="80%" :src="Bear" />
     <div class="logo-text">熊の工具箱</div>
   </div>
 </template>

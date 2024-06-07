@@ -21,6 +21,7 @@ import appList from './components/app-list.vue'
   flex-direction: column;
   padding: 1rem;
   box-sizing: border-box;
+  background-color: gray;
 }
 .logo-content {
   height: 20vh;

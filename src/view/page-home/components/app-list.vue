@@ -24,7 +24,7 @@
         ><div class="swipe-item">
           <appItem
             style="margin-top: 1.2rem"
-            v-for="(item, index) in list.slice(0, 24)"
+            v-for="(item, index) in list.slice(0, 20)"
           /></div
       ></van-swipe-item>
       <van-swipe-item><div class="swipe-item">222222</div></van-swipe-item>

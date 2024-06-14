@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "dhtmlx-gantt": "^8.0.8",
     "normalize.css": "^8.0.1",
     "vant": "^4.9.1",
     "vh-check": "^2.0.5",

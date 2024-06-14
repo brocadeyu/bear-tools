@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      dhtmlx-gantt:
+        specifier: ^8.0.8
+        version: 8.0.8
       normalize.css:
         specifier: ^8.0.1
         version: 8.0.1
@@ -401,6 +404,9 @@ packages:
     peerDependenciesMeta:
       supports-color:
         optional: true
+
+  dhtmlx-gantt@8.0.8:
+    resolution: {integrity: sha512-Ay2L4FgnOWdc+gqI1N8eelzjvrB+gUcYXTgGQI5xtUIixcZzmBmUKhsXIv8vyORcTJ5P/GxlxpKoLzv24wLHOg==}
 
   entities@4.5.0:
     resolution: {integrity: sha512-V0hjH4dGPh9Ao5p0MoRY6BVqtwCjhz6vI5LT8AJ55H+4g9/4vbHx1I54fS0XuclLhDHArPQCiMjDxjaL8fPxhw==}
@@ -931,6 +937,8 @@ snapshots:
   debug@4.3.5:
     dependencies:
       ms: 2.1.2
+
+  dhtmlx-gantt@8.0.8: {}
 
   entities@4.5.0: {}
 

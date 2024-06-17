@@ -208,7 +208,9 @@
 
         adjustCanvasDimensions() {
           const days = this.getTotalDays()
-          const width = this.padding * 2 + days * this.dayWidth()
+          if (this._totalDays === days) return
+          this._totalDays = days
+          const width = this.padding * 2 + days * this.dayWidth() + this.padding
           this.canvas.width = width
 
           // Adjust the canvas height to fit all tasks
@@ -220,6 +222,7 @@
 
         render() {
           this.clear()
+          this.adjustCanvasDimensions()
           this.drawGrid() //绘制网格坐标
           this.drawTasks() //绘制任务及标签
           this.animationFrameId = null
@@ -297,6 +300,7 @@
           const endDays = this.tasks.map(
             (task) => task.startTime + task.duration
           )
+          // console.log('EndDays', Math.max(...endDays))
           return Math.max(...endDays)
           // return Math.max(...endDays) - Math.min(...startDays)
         }

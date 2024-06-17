@@ -49,6 +49,7 @@
           this.resizingTask = null //正在拉伸大小的任务
           this.highlightedTask = null
           this.resizeDirection = null //拉伸方向
+          this.scale = 1 // Scale factor for zooming
           this.dragOffsetX = 0 //拉伸开始标记
           this.addEventListeners() //注册事件
           this.adjustCanvasDimensions() //自动适应canvas宽度
@@ -65,6 +66,7 @@
             'mouseleave',
             this.onMouseLeave.bind(this)
           )
+          this.canvas.addEventListener('wheel', this.onMouseWheel.bind(this))
         }
         onMouseClick(event) {
           if (this.state === state_type.dragging) {
@@ -74,6 +76,15 @@
           const task = this.getTaskAt(offsetX, offsetY)
           // console.log('task', task)
           this.state = state_type.null
+        }
+        onMouseWheel(event) {
+          event.preventDefault()
+          const delta = Math.sign(event.deltaY)
+          const zoomFactor = 0.1
+          this.scale -= delta * zoomFactor
+          this.scale = Math.max(0.1, Math.min(3, this.scale)) // Clamp the scale between 0.1 and 3
+          this.adjustCanvasDimensions()
+          this.requestRender() // Request render after scaling
         }
 
         onMouseDown(event) {
@@ -208,8 +219,10 @@
 
         adjustCanvasDimensions() {
           const days = this.getTotalDays()
-          if (this._totalDays === days) return
+          const scale = this.scale
+          if (this._totalDays === days && this._scale === scale) return
           this._totalDays = days
+          this._scale = scale
           const width = this.padding * 2 + days * this.dayWidth() + this.padding
           this.canvas.width = width
 
@@ -292,7 +305,7 @@
           const visibleWidth = 1200 - 2 * this.padding // Assuming the visible width is 800px
           const minDayWidth = 30 // Minimum width per day in pixels
           const calculatedDayWidth = visibleWidth / days
-          return Math.max(minDayWidth, calculatedDayWidth)
+          return Math.max(minDayWidth, calculatedDayWidth) * this.scale
         }
 
         getTotalDays() {

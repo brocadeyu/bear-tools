@@ -5,7 +5,6 @@
 import { defineComponent, onMounted, ref } from 'vue'
 import { gantt } from 'dhtmlx-gantt' // 核心模块
 import 'dhtmlx-gantt/codebase/dhtmlxgantt.css' // 样式模块
-
 const ganttRef = ref(null)
 const tasks = {
   data: [
@@ -66,7 +65,7 @@ onMounted(() => {
     // gantt.config.order_branch_free = true
     gantt.config.show_links = false
     gantt.config.drag_progress = false
-    gantt.config.duration_unit = 'hour'
+    gantt.config.duration_unit = 'year'
     gantt.config.scales = [
       // {
       //   unit: 'week',
@@ -76,9 +75,9 @@ onMounted(() => {
       //   },
       // },
       {
-        unit: 'hour',
+        unit: 'year',
         step: 1,
-        format: '%H',
+        format: '%Y',
         // format: function (date) {
         //   return 'Week #' + gantt.date.getWeek(date)
         // },

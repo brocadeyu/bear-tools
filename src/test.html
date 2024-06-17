@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Gantt Chart</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      #container {
+        overflow-x: auto;
+        width: 1200px;
+        border: 1px solid #ccc;
+      }
+      #ganttCanvas {
+        display: block;
+      }
+      .resize-cursor {
+        cursor: ew-resize;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Gantt Chart</h1>
+    <div id="container">
+      <canvas id="ganttCanvas" height="400"></canvas>
+    </div>
+    <script>
+      //canvas事件状态
+      let state_type = {
+        null: 'null', //空
+        clickStart: 'clickStart', //开始点击
+        dragging: 'dragging', //拖动中
+      }
+      class GanttChart {
+        tasks = null //任务列表
+        padding = null //主容器内边距
+        taskHeight = null //任务高度
+        taskPadding = null //任务内边距
+        constructor(canvas, tasks) {
+          this.canvas = canvas
+          this.context = canvas.getContext('2d')
+          this.tasks = tasks
+          this.padding = 50
+          this.taskHeight = 20
+          this.taskPadding = 10
+          this.draggingTask = null //正在拖拽的任务
+          this.resizingTask = null //正在拉伸大小的任务
+          this.resizeDirection = null //拉伸方向
+          this.dragOffsetX = 0 //拉伸开始标记
+          this.addEventListeners() //注册事件
+          this.adjustCanvasDimensions() //自动适应canvas宽度
+          this.state = state_type.null
+          this.render() //渲染
+        }
+
+        addEventListeners() {
+          this.canvas.addEventListener('click', this.onMouseClick.bind(this))
+          this.canvas.addEventListener('mousedown', this.onMouseDown.bind(this))
+          this.canvas.addEventListener('mousemove', this.onMouseMove.bind(this))
+          this.canvas.addEventListener('mouseup', this.onMouseUp.bind(this))
+          this.canvas.addEventListener(
+            'mouseleave',
+            this.onMouseLeave.bind(this)
+          )
+        }
+        onMouseClick(event) {
+          if (this.state === state_type.dragging) {
+            return (this.state = state_type.null)
+          }
+          console.log('click', event)
+          const { offsetX, offsetY } = event
+          const task = this.getTaskAt(offsetX, offsetY)
+          console.log('task', task)
+          this.state = state_type.null
+        }
+
+        onMouseDown(event) {
+          this.state = state_type.clickStart
+          const { offsetX, offsetY } = event
+          const task = this.getTaskAt(offsetX, offsetY)
+          if (task) {
+            const edge = this.getResizeEdge(task, offsetX, offsetY)
+            if (edge) {
+              this.resizingTask = task
+              this.resizeDirection = edge
+            } else {
+              this.draggingTask = task
+              this.dragOffsetX =
+                offsetX - this.padding - task.startTime * this.dayWidth()
+            }
+          }
+        }
+
+        onMouseMove(event) {
+          if (this.state === state_type.clickStart) {
+            this.state = state_type.dragging
+          }
+          const { offsetX, offsetY } = event
+          if (this.draggingTask) {
+            let newStartDay = Math.max(
+              0,
+              Math.round(
+                (offsetX - this.padding - this.dragOffsetX) / this.dayWidth()
+              )
+            )
+            this.draggingTask.startTime = newStartDay
+            this.requestRender()
+          } else if (this.resizingTask) {
+            const task = this.resizingTask
+            if (this.resizeDirection === 'left') {
+              const newStartDay = Math.max(
+                0,
+                Math.round((offsetX - this.padding) / this.dayWidth())
+              )
+              task.duration += task.startTime - newStartDay
+              task.startTime = newStartDay
+            } else if (this.resizeDirection === 'right') {
+              const newDuration = Math.max(
+                1,
+                Math.round((offsetX - this.padding) / this.dayWidth()) -
+                  task.startTime
+              )
+              task.duration = newDuration
+            }
+            this.requestRender()
+          } else {
+            const task = this.getTaskAt(offsetX, offsetY)
+            if (task) {
+              const edge = this.getResizeEdge(task, offsetX, offsetY)
+              if (edge) {
+                this.canvas.style.cursor = 'ew-resize'
+              } else {
+                this.canvas.style.cursor = 'default'
+              }
+            } else {
+              this.canvas.style.cursor = 'default'
+            }
+          }
+        }
+
+        onMouseUp() {
+          this.draggingTask = null
+          this.resizingTask = null
+          this.resizeDirection = null
+        }
+
+        onMouseLeave() {
+          this.draggingTask = null
+          this.resizingTask = null
+          this.resizeDirection = null
+        }
+
+        getTaskAt(x, y) {
+          const startY = this.padding
+          for (let i = 0; i < this.tasks.length; i++) {
+            const task = this.tasks[i]
+            const taskX = this.padding + task.startTime * this.dayWidth()
+            const taskY = startY + i * (this.taskHeight + this.taskPadding)
+            if (
+              x >= taskX &&
+              x <= taskX + task.duration * this.dayWidth() &&
+              y >= taskY &&
+              y <= taskY + this.taskHeight
+            ) {
+              return task
+            }
+          }
+          return null
+        }
+
+        getResizeEdge(task, x, y) {
+          const startX = this.padding + task.startTime * this.dayWidth()
+          const endX = startX + task.duration * this.dayWidth()
+          if (x >= startX - 5 && x <= startX + 5) {
+            return 'left'
+          } else if (x >= endX - 5 && x <= endX + 5) {
+            return 'right'
+          }
+          return null
+        }
+
+        adjustCanvasDimensions() {
+          const days = this.getTotalDays()
+          const width = this.padding * 2 + days * this.dayWidth()
+          this.canvas.width = width
+
+          // Adjust the canvas height to fit all tasks
+          const totalTaskHeight =
+            this.tasks.length * (this.taskHeight + this.taskPadding)
+          const requiredHeight = totalTaskHeight + 2 * this.padding
+          this.canvas.height = requiredHeight > 400 ? requiredHeight : 400
+        }
+
+        render() {
+          console.log(this.state)
+          // this.adjustCanvasDimensions()
+          this.clear()
+          this.drawGrid()
+          this.drawTasks()
+          this.animationFrameId = null
+        }
+        requestRender() {
+          if (!this.animationFrameId) {
+            this.animationFrameId = requestAnimationFrame(() => {
+              this.render()
+            })
+          }
+        }
+
+        clear() {
+          this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
+        }
+
+        drawGrid() {
+          const ctx = this.context
+          const height = this.canvas.height
+          const days = this.getTotalDays()
+          const interval = this.calculateInterval(days)
+
+          ctx.beginPath()
+          for (let i = 0; i <= days; i++) {
+            const x = this.padding + i * this.dayWidth()
+            ctx.moveTo(x, this.padding)
+            ctx.lineTo(x, height - this.padding)
+            if (i % interval === 0) {
+              ctx.fillText(`${i}ms`, x, this.padding - 20)
+            }
+          }
+          ctx.strokeStyle = '#eee'
+          ctx.stroke()
+        }
+
+        drawTasks() {
+          const ctx = this.context
+          const startY = this.padding
+
+          this.tasks.forEach((task, index) => {
+            const startX = this.padding + this.dayWidth() * task.startTime
+            const width = this.dayWidth() * task.duration
+            const y = startY + index * (this.taskHeight + this.taskPadding)
+
+            ctx.fillStyle = task.color || 'blue'
+            ctx.fillRect(startX, y, width, this.taskHeight)
+            ctx.fillStyle = 'black'
+            ctx.fillText(task.name, startX + 5, y + 15)
+          })
+        }
+
+        dayWidth() {
+          const days = this.getTotalDays()
+          const visibleWidth = 1200 - 2 * this.padding // Assuming the visible width is 800px
+          const minDayWidth = 30 // Minimum width per day in pixels
+          const calculatedDayWidth = visibleWidth / days
+          return Math.max(minDayWidth, calculatedDayWidth)
+        }
+
+        getTotalDays() {
+          const startDays = this.tasks.map((task) => task.startTime)
+          const endDays = this.tasks.map(
+            (task) => task.startTime + task.duration
+          )
+          return Math.max(...endDays) - Math.min(...startDays)
+        }
+
+        calculateInterval(days) {
+          const maxLabels = Math.floor((1200 - 2 * this.padding) / 50) // Assuming 50px per label
+          return Math.max(1, Math.ceil(days / maxLabels))
+        }
+      }
+
+      // 示例任务数据
+      const tasks = [
+        { name: 'Task 1', startTime: 0, duration: 5, color: 'red' },
+        { name: 'Task 2', startTime: 3, duration: 7, color: 'green' },
+        { name: 'Task 3', startTime: 10, duration: 3, color: 'blue' },
+        { name: 'Task 4', startTime: 10, duration: 10, color: 'purple' },
+      ]
+
+      // 初始化甘特图
+      const canvas = document.getElementById('ganttCanvas')
+      const ganttChart = new GanttChart(canvas, tasks)
+    </script>
+  </body>
+</html>

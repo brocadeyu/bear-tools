@@ -13,27 +13,6 @@
     <div id="app"></div>
     <script type="module" src="/src/main.js"></script>
   </body>
-  <style>
-    :root {
-      --vh: 100%; /* 默认值，防止未定义时出错 */
-    }
-
-    #app {
-      width: 100vw; /* 宽度为视口宽度的 100% */
-      height: calc(var(--vh, 1vh) * 100); /* 高度根据动态计算的视口高度调整 */
-      background-color: lightblue;
-    }
-  </style>
-  <script>
-    function setVh() {
-      let vh = window.innerHeight * 0.01
-      let vw = window.innerWidth * 0.01
-      window._vh = vh
-      window._vw = vw
-      document.documentElement.style.setProperty('--vh', `${vh}px`)
-    }
-    window.addEventListener('resize', setVh)
-    window.addEventListener('orientationchange', setVh)
-    setVh() // 初始调用，设置变量值
-  </script>
+  <style></style>
+  <script></script>
 </html>

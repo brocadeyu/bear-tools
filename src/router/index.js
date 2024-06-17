@@ -1,9 +1,10 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 const pageHome = () => import('@/view/home.vue')
+const pageCustom = () => import('@/view/custom-canvas.vue')
 const routes = [
   {
     path: '/',
-    component: pageHome,
+    component: pageCustom,
     name: 'vue',
   },
   {

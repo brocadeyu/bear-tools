@@ -52,10 +52,44 @@
           this.resizeDirection = null //拉伸方向
           this.scale = 1 // Scale factor for zooming
           this.dragOffsetX = 0 //拉伸开始标记
+          this.state = state_type.null
+          this.angle = 0
+        }
+        init() {
+          if (this.animationFrameId1) {
+            cancelAnimationFrame(this.animationFrameId1)
+          }
           this.addEventListeners() //注册事件
           this.adjustCanvasDimensions() //自动适应canvas宽度
-          this.state = state_type.null
           this.render() //渲染
+        }
+        drawLoadingAnimation() {
+          const ctx = this.canvas.getContext('2d')
+          ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+
+          const centerX = this.canvas.width / 2
+          const centerY = this.canvas.height / 2
+          const radius = 40
+          const lineWidth = 10
+
+          ctx.save()
+          ctx.translate(centerX, centerY)
+          ctx.rotate(this.angle)
+
+          ctx.beginPath()
+          ctx.arc(0, 0, radius, 0, Math.PI * 1.5)
+          ctx.lineWidth = lineWidth
+          ctx.strokeStyle = '#3498db'
+          ctx.stroke()
+          ctx.closePath()
+
+          ctx.restore()
+
+          this.angle += 0.05
+
+          this.animationFrameId1 = requestAnimationFrame(() => {
+            this.drawLoadingAnimation()
+          })
         }
 
         addEventListeners() {
@@ -378,6 +412,10 @@
       // 初始化甘特图
       const canvas = document.getElementById('ganttCanvas')
       const ganttChart = new GanttChart(canvas, tasks)
+      ganttChart.drawLoadingAnimation()
+      setTimeout(() => {
+        ganttChart.init()
+      }, 3000)
     </script>
   </body>
 </html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Canvas Loading Animation</title>
+    <style>
+      body,
+      html {
+        height: 100%;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f0f0f0;
+      }
+      canvas {
+        background-color: #ffffff;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="loadingCanvas" width="200" height="200"></canvas>
+    <script>
+      const canvas = document.getElementById('loadingCanvas')
+      const ctx = canvas.getContext('2d')
+
+      let angle = 0
+
+      function drawLoadingAnimation() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+        const centerX = canvas.width / 2
+        const centerY = canvas.height / 2
+        const radius = 40
+        const lineWidth = 10
+
+        ctx.save()
+        ctx.translate(centerX, centerY)
+        ctx.rotate(angle)
+
+        ctx.beginPath()
+        ctx.arc(0, 0, radius, 0, Math.PI * 1.5)
+        ctx.lineWidth = lineWidth
+        ctx.strokeStyle = '#3498db'
+        ctx.stroke()
+        ctx.closePath()
+
+        ctx.restore()
+
+        angle += 0.05
+
+        requestAnimationFrame(drawLoadingAnimation)
+      }
+
+      drawLoadingAnimation()
+    </script>
+  </body>
+</html>

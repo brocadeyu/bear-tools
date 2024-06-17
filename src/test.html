@@ -47,6 +47,7 @@
           this.taskPadding = 10
           this.draggingTask = null //正在拖拽的任务
           this.resizingTask = null //正在拉伸大小的任务
+          this.highlightedTask = null
           this.resizeDirection = null //拉伸方向
           this.dragOffsetX = 0 //拉伸开始标记
           this.addEventListeners() //注册事件
@@ -133,8 +134,16 @@
               } else {
                 this.canvas.style.cursor = 'default'
               }
+              if (this.highlightedTask !== task) {
+                this.highlightedTask = task
+                this.requestRender() // Request render to update highlighted task
+              }
             } else {
               this.canvas.style.cursor = 'default'
+              if (this.highlightedTask) {
+                this.highlightedTask = null
+                this.requestRender() // Request render to clear highlight
+              }
             }
           }
           // Auto-scroll if near the edges
@@ -262,7 +271,13 @@
             const width = this.dayWidth() * task.duration
             const y = startY + index * (this.taskHeight + this.taskPadding)
 
-            ctx.fillStyle = task.color || 'blue'
+            // ctx.fillStyle = task.color || 'blue'
+            if (task === this.highlightedTask) {
+              ctx.fillStyle = task.highlightColor || 'yellow'
+            } else {
+              ctx.fillStyle = task.color || 'blue'
+            }
+
             ctx.fillRect(startX, y, width, this.taskHeight)
             ctx.fillStyle = 'black'
             ctx.fillText(task.name, startX + 5, y + 15)

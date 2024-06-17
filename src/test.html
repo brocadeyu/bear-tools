@@ -7,8 +7,9 @@
         font-family: Arial, sans-serif;
       }
       #container {
-        overflow-x: auto;
+        overflow: auto;
         width: 1200px;
+        height: 800px;
         border: 1px solid #ccc;
       }
       #ganttCanvas {
@@ -78,13 +79,15 @@
           this.state = state_type.null
         }
         onMouseWheel(event) {
-          event.preventDefault()
-          const delta = Math.sign(event.deltaY)
-          const zoomFactor = 0.1
-          this.scale -= delta * zoomFactor
-          this.scale = Math.max(0.1, Math.min(3, this.scale)) // Clamp the scale between 0.1 and 3
-          this.adjustCanvasDimensions()
-          this.requestRender() // Request render after scaling
+          if (event.ctrlKey) {
+            event.preventDefault()
+            const delta = Math.sign(event.deltaY)
+            const zoomFactor = 0.1
+            this.scale -= delta * zoomFactor
+            this.scale = Math.max(0.1, Math.min(3, this.scale)) // Clamp the scale between 0.1 and 3
+            this.adjustCanvasDimensions()
+            this.requestRender() // Request render after scaling
+          }
         }
 
         onMouseDown(event) {
@@ -224,7 +227,7 @@
           this._totalDays = days
           this._scale = scale
           const width = this.padding * 2 + days * this.dayWidth() + this.padding
-          this.canvas.width = width
+          this.canvas.width = width < 1200 ? 1200 - 17 : width
 
           // Adjust the canvas height to fit all tasks
           const totalTaskHeight =
@@ -326,6 +329,46 @@
 
       // 示例任务数据
       const tasks = [
+        { name: 'Task 1', startTime: 0, duration: 5, color: 'red' },
+        { name: 'Task 2', startTime: 3, duration: 7, color: 'green' },
+        { name: 'Task 3', startTime: 10, duration: 3, color: 'blue' },
+        { name: 'Task 4', startTime: 10, duration: 100, color: 'purple' },
+        { name: 'Task 1', startTime: 0, duration: 5, color: 'red' },
+        { name: 'Task 2', startTime: 3, duration: 7, color: 'green' },
+        { name: 'Task 3', startTime: 10, duration: 3, color: 'blue' },
+        { name: 'Task 4', startTime: 10, duration: 100, color: 'purple' },
+        { name: 'Task 1', startTime: 0, duration: 5, color: 'red' },
+        { name: 'Task 2', startTime: 3, duration: 7, color: 'green' },
+        { name: 'Task 3', startTime: 10, duration: 3, color: 'blue' },
+        { name: 'Task 4', startTime: 10, duration: 100, color: 'purple' },
+        { name: 'Task 1', startTime: 0, duration: 5, color: 'red' },
+        { name: 'Task 2', startTime: 3, duration: 7, color: 'green' },
+        { name: 'Task 3', startTime: 10, duration: 3, color: 'blue' },
+        { name: 'Task 4', startTime: 10, duration: 100, color: 'purple' },
+        { name: 'Task 1', startTime: 0, duration: 5, color: 'red' },
+        { name: 'Task 2', startTime: 3, duration: 7, color: 'green' },
+        { name: 'Task 3', startTime: 10, duration: 3, color: 'blue' },
+        { name: 'Task 4', startTime: 10, duration: 100, color: 'purple' },
+        { name: 'Task 1', startTime: 0, duration: 5, color: 'red' },
+        { name: 'Task 2', startTime: 3, duration: 7, color: 'green' },
+        { name: 'Task 3', startTime: 10, duration: 3, color: 'blue' },
+        { name: 'Task 4', startTime: 10, duration: 100, color: 'purple' },
+        { name: 'Task 1', startTime: 0, duration: 5, color: 'red' },
+        { name: 'Task 2', startTime: 3, duration: 7, color: 'green' },
+        { name: 'Task 3', startTime: 10, duration: 3, color: 'blue' },
+        { name: 'Task 4', startTime: 10, duration: 100, color: 'purple' },
+        { name: 'Task 1', startTime: 0, duration: 5, color: 'red' },
+        { name: 'Task 2', startTime: 3, duration: 7, color: 'green' },
+        { name: 'Task 3', startTime: 10, duration: 3, color: 'blue' },
+        { name: 'Task 4', startTime: 10, duration: 100, color: 'purple' },
+        { name: 'Task 1', startTime: 0, duration: 5, color: 'red' },
+        { name: 'Task 2', startTime: 3, duration: 7, color: 'green' },
+        { name: 'Task 3', startTime: 10, duration: 3, color: 'blue' },
+        { name: 'Task 4', startTime: 10, duration: 100, color: 'purple' },
+        { name: 'Task 1', startTime: 0, duration: 5, color: 'red' },
+        { name: 'Task 2', startTime: 3, duration: 7, color: 'green' },
+        { name: 'Task 3', startTime: 10, duration: 3, color: 'blue' },
+        { name: 'Task 4', startTime: 10, duration: 100, color: 'purple' },
         { name: 'Task 1', startTime: 0, duration: 5, color: 'red' },
         { name: 'Task 2', startTime: 3, duration: 7, color: 'green' },
         { name: 'Task 3', startTime: 10, duration: 3, color: 'blue' },
